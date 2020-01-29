@@ -13,7 +13,7 @@ Ele oferece os seguintes atributos:
 
 A Direção terá a responsabilidade de controlar a direção. Ela oferece
 os seguintes atributos:
-    1) Valor de diração com valores possíveis: Norte, Sul, Leste, Oeste.
+    1) Valor de direção com valores possíveis: Norte, Sul, Leste, Oeste.
     2) Método girar_a_direita
     3) Método girar_a_esquerda
 
@@ -94,60 +94,69 @@ Exemplo:
     'Oeste'
 """
 
-class Motor():
+class Motor:
     def __init__(self):
         self.velocidade = 0
 
-
     def acelerar(self):
         self.velocidade += 1
-
 
     def frear(self):
         if self.velocidade > 0:
             if self.velocidade >= 2:
                 self.velocidade -= 2
-            else: self.velocidade -= 1
+            else:
+                self.velocidade -= 1
+
 
 class Direcao:
-    index:int = 0
+    index: int = 0
 
     def __init__(self):
-        self.valor: int = self.destinos().get(self.index)
+        #first mistake - self.valor = self.destinos()[]index(self.index).
+        #Explanation: Variables cannot be accessed outside the scope of a function they were defined in.
+        self.valor = self.destinos()[self.index]
 
-    @classmethod
-    def posicao(cls, sentido:int = 1):
-        return cls.index + sentido
+    def posicao(self, sentido: int):
+        self.index = self.index + sentido
+        return self.index
 
     @staticmethod
     def destinos():
-        return list['Norte', 'Leste', 'Sul', 'Oeste']
-
+        #second error = list['Norte', 'Leste', 'Sul', 'Oeste']
+        return ['Norte', 'Leste', 'Sul', 'Oeste']
 
     def girar_a_direita(self):
-        self.valor = self.destinos().get(self.posicao())
-
+        if self.index == 3:
+            # reseting
+            self.index = 0
+            self.valor = self.destinos()[self.posicao(0)]
+        else:
+            self.valor = self.destinos()[self.posicao(1)]
 
     def girar_a_esquerda(self):
-        self.valor = self.destinos().get(self.posicao(-1))
+        if self.index == 0:
+            # reseting
+            self.index = 3
+            self.valor = self.destinos()[self.posicao(0)]
+        else:
+            self.valor = self.destinos()[self.posicao(-1)]
 
 
-class Carro():
-    def __init__(self, direcao:Direcao, motor:Motor):
+class Carro:
+    def __init__(self, direcao: Direcao, motor: Motor):
         self.direcao = direcao
-        self.motor=motor
-
+        self.motor = motor
 
     def calcular_velocidade(self):
         return self.motor.velocidade
 
-
     def acelerar(self):
-        return self.motor.acelerar()
-
+        self.motor.acelerar()
 
     def frear(self):
-        return self.motor.frear()
-
+        self.motor.frear()
 
     def calcular_direcao(self):
+        return self.direcao.valor
+
