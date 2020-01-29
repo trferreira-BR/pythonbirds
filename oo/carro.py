@@ -102,19 +102,14 @@ class Motor:
         self.velocidade += 1
 
     def frear(self):
-        if self.velocidade > 0:
-            if self.velocidade >= 2:
-                self.velocidade -= 2
-            else:
-                self.velocidade -= 1
+        self.velocidade -= 2
+        self.velocidade = max(0, self.velocidade)
 
 
 class Direcao:
     index: int = 0
 
     def __init__(self):
-        #first mistake - self.valor = self.destinos()[]index(self.index).
-        #Explanation: Variables cannot be accessed outside the scope of a function they were defined in.
         self.valor = self.destinos()[self.index]
 
     def posicao(self, sentido: int):
@@ -123,7 +118,6 @@ class Direcao:
 
     @staticmethod
     def destinos():
-        #second error = list['Norte', 'Leste', 'Sul', 'Oeste']
         return ['Norte', 'Leste', 'Sul', 'Oeste']
 
     def girar_a_direita(self):
