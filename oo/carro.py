@@ -160,3 +160,8 @@ class Carro:
     def calcular_direcao(self):
         return self.direcao.valor
 
+    def girar_a_direita(self):
+        self.direcao.girar_a_direita()
+
+    def girar_a_esquerda(self):
+        self.direcao.girar_a_esquerda()
