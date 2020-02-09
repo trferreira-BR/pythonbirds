@@ -55,7 +55,7 @@ class Ator():
         if self.status == DESTRUIDO and outro_ator.status == DESTRUIDO:
             return
 
-        if self.status == ATIVO and outro_ator.status == ATIVO and self.x == self.y:
+        if self.status == ATIVO and outro_ator.status == ATIVO and abs(self.x - outro_ator.x) <= intervalo and abs(self.y - outro_ator.y) <= intervalo:
             self.status = DESTRUIDO
             outro_ator.status = DESTRUIDO
             self.caracter()
