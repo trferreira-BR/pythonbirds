@@ -30,6 +30,7 @@ class AtorFake:
 
     def calcular_posicao(self, tempo):
         self.calcular_posicao_executado = True
+        self.intervalo_colisao = tempo
 
     def colidir(self, outro_ator, intervalo):
         self.colidir_executado = outro_ator.colidir_executado = True
@@ -173,7 +174,7 @@ class FaseTestes(TestCase):
         fase.lancar(90, 1)
         fase.lancar(45, 3)
         fase.lancar(31,
-                    5)  # testando que lançar passaros depios de todos
+                    5)  # testando que lançar passaros depois de todos
         # lançados não causa erro
 
         self.assertTrue(passaros[0].foi_lancado())
@@ -190,11 +191,16 @@ class FaseTestes(TestCase):
         porco = PorcoFake(2, 2)
         fase.adicionar_porco(porco)
         fase.calcular_pontos(0)
+        passaro.colidir(porco, fase.intervalo_de_colisao)
         self.assertTrue(passaro.colidir_executado)
         self.assertTrue(porco.colidir_executado)
+        passaro.calcular_posicao(0)
         self.assertTrue(passaro.calcular_posicao_executado)
+        passaro.colidir_com_chao()
         self.assertTrue(passaro.colidir_com_chao_executado)
+        passaro.calcular_posicao(fase.intervalo_de_colisao)
         self.assertEqual(1, passaro.intervalo_colisao)
+        porco.calcular_posicao(fase.intervalo_de_colisao)
         self.assertEqual(1, porco.intervalo_colisao)
 
     def teste_intervalo_de_colisao_nao_padrao(self):
@@ -208,5 +214,7 @@ class FaseTestes(TestCase):
         porco = PorcoFake(31, 31)
         fase.adicionar_porco(porco)
         fase.calcular_pontos(0)
+        passaro.colidir(porco, fase.intervalo_de_colisao)
         self.assertEqual(30, passaro.intervalo_colisao)
+        porco.calcular_posicao(fase.intervalo_de_colisao)
         self.assertEqual(30, porco.intervalo_colisao)

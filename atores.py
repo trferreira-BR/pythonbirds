@@ -91,6 +91,7 @@ class Passaro(Ator):
         self._y_inicial = y
         self._tempo_de_lancamento = None
         self._angulo_de_lancamento = None  # radianos
+        self._lancado = False
 
     def foi_lancado(self):
         """
@@ -98,7 +99,7 @@ class Passaro(Ator):
 
         :return: booleano
         """
-        return True
+        return self._lancado
 
     def colidir_com_chao(self):
         """
@@ -134,7 +135,9 @@ class Passaro(Ator):
         :param tempo_de_lancamento:
         :return:
         """
-        pass
+        self._angulo_de_lancamento = math.radians(angulo)
+        self._tempo_de_lancamento = tempo_de_lancamento
+        self._lancado = True
 
 
 class PassaroAmarelo(Passaro):
