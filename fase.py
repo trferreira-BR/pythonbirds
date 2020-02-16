@@ -133,14 +133,12 @@ class Fase():
         return pontos
 
     def _causar_colisao_passaro(self, passaro):
-        # for ponto in self._obstaculos + self._porcos:
-        #     passaro.colidir(ponto, self.intervalo_de_colisao)
-        # passaro.colidir_com_chao()
-        pass
+        for ponto in self._obstaculos + self._porcos:
+            passaro.colidir(ponto, self.intervalo_de_colisao)
+        passaro.colidir_com_chao()
 
     def _calcula_posicao_passaro_pelo_tempo(self, passaro, tempo):
-        # passaro.calcular_posicao(tempo)
-        pass
+        passaro.calcular_posicao(tempo)
 
     def _transformar_em_ponto(self, ator):
         return Ponto(ator.x, ator.y, ator.caracter())
